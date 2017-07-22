@@ -5,6 +5,8 @@ This is a useful project to test the screen of Echo Show
 This sample is not tested with Echo Show device.
 (because i don't have it yet)
 
+![sample image](https://github.com/sparkgene/echo-show-display-test/raw/master/BodyTemplate1.png)
+
 ## How to use
 
 ### Create s3 bucket
