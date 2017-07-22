@@ -2,6 +2,9 @@
 
 This is a useful project to test the screen of Echo Show
 
+This sample is not tested with Echo Show device.
+(because i don't have it yet)
+
 ## How to use
 
 ### Create s3 bucket
@@ -25,7 +28,7 @@ Put the bucket policy for public access.
 }
 ```
 
-Copy all images includes in `image` to the bucket.
+Copy all media files includes in `media` to the bucket.
 Verify you can access the image from the browser.
 
 ### Create Lambda Function

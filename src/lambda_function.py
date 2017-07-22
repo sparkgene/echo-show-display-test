@@ -16,6 +16,8 @@ def lambda_handler(event, context):
             return body_template(event["request"]["intent"]["slots"]["number"]["value"])
         elif event["request"]["intent"]["name"] == "ListTemplate":
             return list_template(event["request"]["intent"]["slots"]["number"]["value"])
+        elif event["request"]["intent"]["name"] == "VideoTemplate":
+            return video_template()
 
     print("request type unmatch")
     return help()
@@ -78,7 +80,7 @@ def body_template_one():
                 "contentDescription": "Mt Fuji",
                 "sources": [
                     {
-                        "url": image_url("background-1.jpg")
+                        "url": media_url("background-1.jpg")
                     }
                 ]
             },
@@ -124,7 +126,7 @@ def body_template_two():
                 "contentDescription": "Mt Fuji",
                 "sources": [
                     {
-                        "url": image_url("background-1.jpg")
+                        "url": media_url("background-1.jpg")
                     }
                 ]
             },
@@ -133,7 +135,7 @@ def body_template_two():
                 "contentDescription": "BBQ gril",
                 "sources": [
                     {
-                        "url": image_url("280x280.jpg")
+                        "url": media_url("280x280.jpg")
                     }
                 ]
             },
@@ -187,7 +189,7 @@ def body_template_three():
                 "contentDescription": "Mt Fuji",
                 "sources": [
                     {
-                        "url": image_url("background-1.jpg")
+                        "url": media_url("background-1.jpg")
                     }
                 ]
             },
@@ -196,7 +198,7 @@ def body_template_three():
                 "contentDescription": "BBQ gril",
                 "sources": [
                     {
-                        "url": image_url("280x280.jpg")
+                        "url": media_url("280x280.jpg")
                     }
                 ]
             },
@@ -233,7 +235,6 @@ def body_template_three():
     return build_speechlet_response(title, speech, directives)
 
 def body_template_six():
-    title = "This is BodyTemplate 6"
     speech = "This is body template six."
     primary_text = "body template six overlay the text."
     secondary_text = "body template six can be used as a welcome screen to offer guidance."
@@ -250,11 +251,10 @@ def body_template_six():
                 "contentDescription": "Mt Fuji",
                 "sources": [
                     {
-                        "url": image_url("background-1.jpg")
+                        "url": media_url("background-1.jpg")
                     }
                 ]
             },
-            "title": title,
             "textContent": {
                 "primaryText": {
                     "text": "<font size='7'>" + primary_text + "</font>",
@@ -305,7 +305,7 @@ def list_template_one():
                 "contentDescription": "Mt Fuji",
                 "sources": [
                     {
-                        "url": image_url("background-2.jpg")
+                        "url": media_url("background-2.jpg")
                     }
                 ]
             },
@@ -315,7 +315,7 @@ def list_template_one():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("88x88-1.jpg")
+                            "url": media_url("88x88-1.jpg")
                             }
                         ],
                         "contentDescription": "strawberry jam"
@@ -336,7 +336,7 @@ def list_template_one():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("88x88-2.jpg")
+                            "url": media_url("88x88-2.jpg")
                             }
                         ],
                         "contentDescription": "garlic oil"
@@ -357,7 +357,7 @@ def list_template_one():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("88x88-1.jpg")
+                            "url": media_url("88x88-1.jpg")
                             }
                         ],
                         "contentDescription": "strawberry jam"
@@ -378,7 +378,7 @@ def list_template_one():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("88x88-2.jpg")
+                            "url": media_url("88x88-2.jpg")
                             }
                         ],
                         "contentDescription": "garlic oil"
@@ -420,7 +420,7 @@ def list_template_two():
                 "contentDescription": "Mt Fuji",
                 "sources": [
                     {
-                        "url": image_url("background-2.jpg")
+                        "url": media_url("background-2.jpg")
                     }
                 ]
             },
@@ -430,7 +430,7 @@ def list_template_two():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("280x192.jpg")
+                            "url": media_url("280x192.jpg")
                             }
                         ],
                         "contentDescription": "strawberry jam"
@@ -451,7 +451,7 @@ def list_template_two():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("280x192.jpg")
+                            "url": media_url("280x192.jpg")
                             }
                         ],
                         "contentDescription": "garlic oil"
@@ -472,7 +472,7 @@ def list_template_two():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("280x192.jpg")
+                            "url": media_url("280x192.jpg")
                             }
                         ],
                         "contentDescription": "strawberry jam"
@@ -493,7 +493,7 @@ def list_template_two():
                     "image": {
                         "sources": [
                             {
-                            "url": image_url("280x192.jpg")
+                            "url": media_url("280x192.jpg")
                             }
                         ],
                         "contentDescription": "garlic oil"
@@ -520,9 +520,43 @@ def list_template_two():
 
     return build_speechlet_response(title, speech, directives)
 
+
+## --------- video ---------
+
+def video_template():
+
+    title = None
+    speech = None
+    template = {
+        "type": "VideoApp.Launch",
+        "videoItem":
+        {
+            "source": media_url("alexa_test.mp4"),
+            "metadata": {
+                "title": "Title for Sample Video",
+                "subtitle": "Secondary Title for Sample Video"
+            }
+        }
+    }
+
+    directives = [
+        template
+    ]
+
+    response = {
+        "version": "1.0",
+        "response": {
+            "outputSpeech": None,
+            "card": None,
+            "directives": [template]
+        }
+    }
+    print(response)
+    return response
+
 ## --------- helper methods ---------
 
-def image_url(key):
+def media_url(key):
     return MEDIA_URL.format(REGION, MEDIA_BUCKET, key)
 
 def build_speechlet_response(title, speech, directives):
