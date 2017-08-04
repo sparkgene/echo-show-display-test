@@ -586,7 +586,7 @@ def video_template():
             "card": {
                 'type': 'Simple',
                 'title': "video player",
-                'content': "this template play video"
+                'content': "this template play video."
             },
             "directives": [template]
         }

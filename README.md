@@ -2,9 +2,6 @@
 
 This is a useful project to test the screen of Echo Show
 
-This sample is not tested with Echo Show device.
-(because i don't have it yet)
-
 ![sample image](https://github.com/sparkgene/echo-show-display-test/raw/master/BodyTemplate1.png)
 
 ## How to use
@@ -54,5 +51,14 @@ fill Environment variables
 
 ### Test the Skill
 
-Say `Alexa, ask <invocation name> body template number 1` to test.
-Or you can test this from test console.
+Say `Alexa, ask <invocation name>` to test. Answer yes, to check the next template.
+
+Or Invoke the template directly with following utterance.
+
+- Alexa, ask <invocation name> body template number 1
+- Alexa, ask <invocation name> body template number 2
+- Alexa, ask <invocation name> body template number 3
+- Alexa, ask <invocation name> body template number 6
+- Alexa, ask <invocation name> list template number 1
+- Alexa, ask <invocation name> list template number 2
+- Alexa, ask <invocation name> video
