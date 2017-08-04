@@ -47,7 +47,7 @@ fill Environment variables
 
 ### create alexa custom Skill
 
-1. Chose "yes" at "Skill Information > Global Feilds > Render Template".
+1. Chose "yes" at "Skill Information > Global Feilds > Render Template and Video App".
 2. Copy `model/intentSchema.json` into "Interaction Model > Intent Schema".
 3. Copy `modle/SampleUtterances.txt` into "Interaction Model > Sample Utterances".
 
