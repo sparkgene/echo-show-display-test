@@ -5,6 +5,14 @@ REGION = os.environ["REGION"]
 MEDIA_BUCKET = os.environ["MEDIA_BUCKET"]
 MEDIA_URL = "https://{}.amazonaws.com/{}/{}"
 
+SESSION_BODY_1 = "body_1"
+SESSION_BODY_2 = "body_2"
+SESSION_BODY_3 = "body_3"
+SESSION_BODY_6 = "body_6"
+SESSION_LIST_1 = "list_1"
+SESSION_LIST_2 = "list_2"
+SESSION_VIDEO = "video"
+
 def lambda_handler(event, context):
     print(event)
 
@@ -18,6 +26,19 @@ def lambda_handler(event, context):
             return list_template(event["request"]["intent"]["slots"]["number"]["value"])
         elif event["request"]["intent"]["name"] == "VideoTemplate":
             return video_template()
+        elif event["request"]["intent"]["name"] == "AMAZON.YesIntent":
+            ses = event["session"]["attributes"]["template"].split("_")
+            print(ses)
+            if ses[0] == "body":
+                return body_template(ses[1])
+            elif ses[0] == "list":
+                return list_template(ses[1])
+            elif ses[0] == "video":
+                return video_template()
+            else:
+                return help()
+        elif event["request"]["intent"]["name"] == "AMAZON.NoIntent":
+            return goodby()
 
     print("request type unmatch")
     return help()
@@ -35,7 +56,22 @@ def help():
         }
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_BODY_1)
+
+def goodby():
+
+    response = {
+        "version": "1.0",
+        "response": {
+            "outputSpeech": {
+                "type": "PlainText",
+                "text": "good by."
+            },
+            "shouldEndSession": True
+        }
+    }
+    print(response)
+    return response
 
 def body_template(number):
     print("body_template {}".format(number))
@@ -106,7 +142,7 @@ def body_template_one():
         template
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_BODY_2)
 
 def body_template_two():
     title = "This is BodyTemplate 2"
@@ -169,7 +205,7 @@ def body_template_two():
         hint
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_BODY_3)
 
 def body_template_three():
     title = "This is BodyTemplate 3"
@@ -232,14 +268,14 @@ def body_template_three():
         hint
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_BODY_6)
 
 def body_template_six():
-    speech = "This is body template six."
+    title = "This is body template six."
     primary_text = "body template six overlay the text."
     secondary_text = "body template six can be used as a welcome screen to offer guidance."
     tertiary_text = "Image does not scroll, but the text does."
-    speech = " ".join([speech, primary_text, secondary_text, tertiary_text])
+    speech = " ".join([title, primary_text, secondary_text, tertiary_text])
 
     template = {
         "type": "Display.RenderTemplate",
@@ -285,7 +321,7 @@ def body_template_six():
         hint
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_LIST_1)
 
 
 ## --------- list template ---------
@@ -403,7 +439,7 @@ def list_template_one():
         template
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_LIST_2)
 
 def list_template_two():
     title = "This is ListTemplate 2"
@@ -518,7 +554,7 @@ def list_template_two():
         template
     ]
 
-    return build_speechlet_response(title, speech, directives)
+    return build_speechlet_response(title, speech, directives, SESSION_VIDEO)
 
 
 ## --------- video ---------
@@ -547,7 +583,11 @@ def video_template():
         "version": "1.0",
         "response": {
             "outputSpeech": None,
-            "card": None,
+            "card": {
+                'type': 'Simple',
+                'title': "video player",
+                'content': "this template play video"
+            },
             "directives": [template]
         }
     }
@@ -559,18 +599,25 @@ def video_template():
 def media_url(key):
     return MEDIA_URL.format(REGION, MEDIA_BUCKET, key)
 
-def build_speechlet_response(title, speech, directives):
+def build_speechlet_response(title, speech, directives, phase):
 
     response = {
         "version": "1.0",
         "response": {
             "outputSpeech": {
                 "type": "PlainText",
-                "text": speech
+                "text": "{}. do you want to see the next template?".format(speech)
             },
-            "card": None,
+            "card": {
+                'type': 'Simple',
+                'title': title,
+                'content': speech
+            },
             "directives": directives,
-            "shouldEndSession": True
+            "shouldEndSession": False
+        },
+        "sessionAttributes": {
+            "template": phase
         }
     }
     print(response)
