@@ -103,7 +103,7 @@ def body_template_one():
     speech = "This is body template one."
     primary_text = "body template can show three lines of text."
     secondary_text = "you can change font size."
-    tertiary_text = "If the sentence is too long than the width, it will be truncated."
+    tertiary_text = "If the sentence is too long than the width, it will be Wrapped. this part will be shown on next row."
     speech = " ".join([speech, primary_text, secondary_text, tertiary_text])
 
     template = {
@@ -149,7 +149,7 @@ def body_template_two():
     speech = "This is body template two."
     primary_text = "body template can show three lines of text."
     secondary_text = "you can change font size."
-    tertiary_text = "body template three can contain 8000 characters. If the text is very long, it become scrollable. Scroll bar are shown on the left side of the text."
+    tertiary_text = "body template two can not scroll. If the text is too long it will truncated."
     speech = " ".join([speech, primary_text, secondary_text, tertiary_text])
 
     template = {
@@ -212,7 +212,7 @@ def body_template_three():
     speech = "This is body template three."
     primary_text = "body template three show image on the left side."
     secondary_text = "you can change font size."
-    tertiary_text = "body template three can contain 8000 characters. If the text is very long, it become scrollable. Scroll bar are shown on the left side of the text."
+    tertiary_text = "body template three can contain 8000 characters. If the text is very long, it become scrollable. Some long text here. Some long text here. Some long text here. Some long text here."
     speech = " ".join([speech, primary_text, secondary_text, tertiary_text])
 
     template = {
@@ -274,7 +274,7 @@ def body_template_six():
     title = "This is body template six."
     primary_text = "body template six overlay the text."
     secondary_text = "body template six can be used as a welcome screen to offer guidance."
-    tertiary_text = "Image does not scroll, but the text does."
+    tertiary_text = "non-scroll and PlainText only"
     speech = " ".join([title, primary_text, secondary_text, tertiary_text])
 
     template = {
@@ -293,8 +293,8 @@ def body_template_six():
             },
             "textContent": {
                 "primaryText": {
-                    "text": "<font size='7'>" + primary_text + "</font>",
-                    "type": "RichText"
+                    "text": primary_text,
+                    "type": "PlainText"
                 },
                 "secondaryText": {
                     "text": secondary_text,
@@ -328,7 +328,7 @@ def body_template_six():
 
 def list_template_one():
     title = "This is ListTemplate 1"
-    speech = "List template six is good for Static or dynamically-generated search results, menu selection, lists, instructions, directions."
+    speech = "List template one is good for Static or dynamically-generated search results, menu selection, lists, instructions, directions. Say scroll down or up to scroll. Or page down or pageup"
 
     template = {
         "type": "Display.RenderTemplate",
@@ -443,7 +443,7 @@ def list_template_one():
 
 def list_template_two():
     title = "This is ListTemplate 2"
-    speech = "List template two is good for Static or dynamically-generated search results, menu selection, lists."
+    speech = "List template two is good for Static or dynamically-generated search results, menu selection, lists. Say scroll right or left to scroll."
 
     template = {
         "type": "Display.RenderTemplate",
