@@ -55,10 +55,11 @@ Say `Alexa, ask <invocation name>` to test. Answer yes, to check the next templa
 
 Or Invoke the template directly with following utterance.
 
-- Alexa, ask <invocation name> body template number 1
-- Alexa, ask <invocation name> body template number 2
-- Alexa, ask <invocation name> body template number 3
-- Alexa, ask <invocation name> body template number 6
-- Alexa, ask <invocation name> list template number 1
-- Alexa, ask <invocation name> list template number 2
-- Alexa, ask <invocation name> video
+- Alexa, ask \<invocation name> body template number 1
+- Alexa, ask \<invocation name> body template number 2
+- Alexa, ask \<invocation name> body template number 3
+- Alexa, ask \<invocation name> body template number 6
+- Alexa, ask \<invocation name> list template number 1
+- Alexa, ask \<invocation name> list template number 2
+- Alexa, ask \<invocation name> video
+- Alexa, ask \<invocation name> action sample
