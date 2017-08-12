@@ -12,6 +12,7 @@ SESSION_BODY_6 = "body_6"
 SESSION_LIST_1 = "list_1"
 SESSION_LIST_2 = "list_2"
 SESSION_VIDEO = "video"
+SESSION_ACTION_1 = "act_1"
 
 def lambda_handler(event, context):
     print(event)
@@ -26,6 +27,8 @@ def lambda_handler(event, context):
             return list_template(event["request"]["intent"]["slots"]["number"]["value"])
         elif event["request"]["intent"]["name"] == "VideoTemplate":
             return video_template()
+        elif event["request"]["intent"]["name"] == "ActionSample":
+            return action_sample()
         elif event["request"]["intent"]["name"] == "AMAZON.YesIntent":
             ses = event["session"]["attributes"]["template"].split("_")
             print(ses)
@@ -35,10 +38,15 @@ def lambda_handler(event, context):
                 return list_template(ses[1])
             elif ses[0] == "video":
                 return video_template()
+            elif ses[0] == "act":
+                return action_sample()
             else:
                 return help()
         elif event["request"]["intent"]["name"] == "AMAZON.NoIntent":
             return goodby()
+    elif event["request"]["type"] == "Display.ElementSelected":
+        return item_selected(event["context"]["Display"]["token"], event["request"]["token"])
+
 
     print("request type unmatch")
     return help()
@@ -103,7 +111,7 @@ def body_template_one():
     speech = "This is body template one."
     primary_text = "body template can show three lines of text."
     secondary_text = "you can change font size."
-    tertiary_text = "If the sentence is too long than the width, it will be Wrapped. this part will be shown on next row."
+    tertiary_text = "If the sentence is too long than the width, it will be Wrapped. this part will be shown on next row. If the text is very long you can scroll to see the full text."
     speech = " ".join([speech, primary_text, secondary_text, tertiary_text])
 
     template = {
@@ -554,7 +562,7 @@ def list_template_two():
         template
     ]
 
-    return build_speechlet_response(title, speech, directives, SESSION_VIDEO)
+    return build_speechlet_response(title, speech, directives, SESSION_ACTION_1)
 
 
 ## --------- video ---------
@@ -593,6 +601,75 @@ def video_template():
     }
     print(response)
     return response
+
+## --------- action sample ---------
+
+def action_sample():
+    title = "RichText can include action."
+    primary_text = "Clicking the word cancel invoke event."
+    secondary_text = "<action value='cancel_action'>Cancel</action>"
+    speech = " ".join([title, primary_text])
+
+    template = {
+        "type": "Display.RenderTemplate",
+        "template": {
+            "type": "BodyTemplate1",
+            "token": "action1",
+            "backButton": "HIDDEN",
+            "title": title,
+            "textContent": {
+                "primaryText": {
+                    "text": primary_text,
+                    "type": "PlainText"
+                },
+                "secondaryText": {
+                    "text": secondary_text,
+                    "type": "RichText"
+                }
+            }
+        }
+    }
+
+    directives = [
+        template
+    ]
+
+    return build_speechlet_response(title, speech, directives, SESSION_VIDEO)
+
+def item_selected(context_token, token):
+    action_map = {
+        "action1": "Action sample",
+        "list_template_one": "list tepmlate 1",
+        "list_template_two": "list tepmlate 2"
+    }
+    title = "Action Invoked."
+    primary_text = "action invoked from {}. the token is {}.".format(
+        action_map[context_token],
+        token
+    )
+
+    template = {
+        "type": "Display.RenderTemplate",
+        "template": {
+            "type": "BodyTemplate1",
+            "token": "action2",
+            "backButton": "HIDDEN",
+            "title": title,
+            "textContent": {
+                "primaryText": {
+                    "text": primary_text,
+                    "type": "PlainText"
+                }
+            }
+        }
+    }
+
+    directives = [
+        template
+    ]
+
+    return build_speechlet_response(title, primary_text, directives, SESSION_BODY_1)
+
 
 ## --------- helper methods ---------
 

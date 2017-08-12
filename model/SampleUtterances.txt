@@ -1,3 +1,4 @@
 BodyTemplate body template number {number}
 ListTemplate list template number {number}
 VideoTemplate video
+ActionSample action sample

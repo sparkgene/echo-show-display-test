@@ -65,6 +65,9 @@
     },
     {
       "intent": "VideoTemplate"
+    },
+    {
+      "intent": "ActionSample"
     }
   ]
 }
