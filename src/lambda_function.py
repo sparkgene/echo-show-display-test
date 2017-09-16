@@ -263,17 +263,9 @@ def body_template_three():
         }
     }
 
-    hint = {
-        "type": "Hint",
-        "hint": {
-            "type": "PlainText",
-            "text": "tell invocation name body template number 6"
-        }
-    }
-
+    # body template 3 do not show hint
     directives = [
-        template,
-        hint
+        template
     ]
 
     return build_speechlet_response(title, speech, directives, SESSION_BODY_6)
@@ -398,14 +390,6 @@ def list_template_one():
                 },
                 {
                     "token": "item_2",
-                    "image": {
-                        "sources": [
-                            {
-                            "url": media_url("88x88-1.jpg")
-                            }
-                        ],
-                        "contentDescription": "strawberry jam"
-                    },
                     "textContent": {
                         "primaryText": {
                             "type": "PlainText",
@@ -443,6 +427,7 @@ def list_template_one():
         }
     }
 
+    # list template 1 do not show hint
     directives = [
         template
     ]
