@@ -554,9 +554,7 @@ def list_template_two():
 
 def video_template():
 
-    title = None
-    speech = None
-    template = {
+    video_template = {
         "type": "VideoApp.Launch",
         "videoItem":
         {
@@ -568,8 +566,39 @@ def video_template():
         }
     }
 
+    primary_text = "Other template can use after video"
+    secondary_text = "But you can not use speech and hint."
+
+    body_template = {
+        "type": "Display.RenderTemplate",
+        "template": {
+            "type": "BodyTemplate6",
+            "token": "bt6",
+            "backButton": "VISIBLE",
+            "backgroundImage": {
+                "contentDescription": "Mt Fuji",
+                "sources": [
+                    {
+                        "url": media_url("background-1.jpg")
+                    }
+                ]
+            },
+            "textContent": {
+                "primaryText": {
+                    "text": primary_text,
+                    "type": "PlainText"
+                },
+                "secondaryText": {
+                    "text": secondary_text,
+                    "type": "PlainText"
+                }
+            }
+        }
+    }
+
     directives = [
-        template
+        video_template,
+        body_template
     ]
 
     response = {
@@ -581,7 +610,7 @@ def video_template():
                 'title': "video player",
                 'content': "this template play video."
             },
-            "directives": [template]
+            "directives": directives
         }
     }
     print(response)
