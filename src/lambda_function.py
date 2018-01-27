@@ -9,6 +9,7 @@ SESSION_BODY_1 = "body_1"
 SESSION_BODY_2 = "body_2"
 SESSION_BODY_3 = "body_3"
 SESSION_BODY_6 = "body_6"
+SESSION_BODY_7 = "body_7"
 SESSION_LIST_1 = "list_1"
 SESSION_LIST_2 = "list_2"
 SESSION_VIDEO = "video"
@@ -92,6 +93,8 @@ def body_template(number):
         return body_template_three()
     elif number == "6":
         return body_template_six()
+    elif number == "7":
+        return body_template_seven()
 
     return help()
 
@@ -304,6 +307,53 @@ def body_template_six():
                     "text": tertiary_text,
                     "type": "PlainText"
                 }
+            }
+        }
+    }
+
+    hint = {
+        "type": "Hint",
+        "hint": {
+            "type": "PlainText",
+            "text": "tell invocation name body template number 7"
+        }
+    }
+
+    directives = [
+        template,
+        hint
+    ]
+
+    return build_speechlet_response(title, speech, directives, SESSION_BODY_7)
+
+def body_template_seven():
+    title = "This is body template seven."
+    primary_text = "body template seven overlay image."
+    secondary_text = "body template seven can not show any text."
+    speech = " ".join([title, primary_text, secondary_text])
+
+    template = {
+        "type": "Display.RenderTemplate",
+        "template": {
+            "type": "BodyTemplate7",
+            "token": "bt7",
+            "title": title,
+            "backButton": "VISIBLE",
+            "backgroundImage": {
+                "contentDescription": "Mt Fuji",
+                "sources": [
+                    {
+                        "url": media_url("background-1.jpg")
+                    }
+                ]
+            },
+            "image": {
+                "contentDescription": "view from the farm",
+                "sources": [
+                    {
+                        "url": media_url("foreground.jpg")
+                    }
+                ]
             }
         }
     }
